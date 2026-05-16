@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-
-const ROLES = ['Data Scientist', 'Data Engineer', 'AI Engineer', 'Business Analyst', 'ML Practitioner']
+import { hero } from '../data/hero'
 
 export function useTyped() {
+  const ROLES = hero.typedRoles
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const [text, setText] = useState(reduced ? ROLES[0] : '')
 

@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import { contact } from '../data/contact'
 
 export default function Contact() {
   return (
@@ -9,17 +10,13 @@ export default function Contact() {
       </h2>
       <div className="section-line" aria-hidden="true" />
 
-      <p className="contact-desc">
-        I'm actively looking for Data Science, Data Engineering, and AI-related opportunities. Feel
-        free to reach out — whether it's a job, collaboration, or just to chat about data and
-        technology!
-      </p>
+      <p className="contact-desc">{contact.description}</p>
 
       <Reveal className="contact-grid">
         <a
           className="contact-card"
-          href="mailto:Tejasbudharamu@outlook.com"
-          aria-label="Send email to Tejasbudharamu@outlook.com"
+          href={`mailto:${contact.email}`}
+          aria-label={`Send email to ${contact.email}`}
         >
           <div className="contact-icon" aria-hidden="true">
             <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -28,12 +25,12 @@ export default function Contact() {
             </svg>
           </div>
           <div className="contact-card-title">Email</div>
-          <div className="contact-card-sub">Tejasbudharamu@outlook.com</div>
+          <div className="contact-card-sub">{contact.email}</div>
         </a>
 
         <a
           className="contact-card"
-          href="https://www.linkedin.com/in/tejas-budharamu-b64984276/"
+          href={contact.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn profile (opens in new tab)"
@@ -44,12 +41,12 @@ export default function Contact() {
             </svg>
           </div>
           <div className="contact-card-title">LinkedIn</div>
-          <div className="contact-card-sub">Tejas Budharamu</div>
+          <div className="contact-card-sub">{contact.linkedinHandle}</div>
         </a>
 
         <a
           className="contact-card"
-          href="https://github.com/Tejas14Feb"
+          href={contact.github}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub profile (opens in new tab)"
@@ -60,7 +57,7 @@ export default function Contact() {
             </svg>
           </div>
           <div className="contact-card-title">GitHub</div>
-          <div className="contact-card-sub">Tejas14Feb</div>
+          <div className="contact-card-sub">{contact.githubHandle}</div>
         </a>
       </Reveal>
 
@@ -75,7 +72,7 @@ export default function Contact() {
         <div className="resume-title">Download My Resume</div>
         <div className="resume-sub">Get a full overview of my skills, experience, and projects.</div>
         <a
-          href="Tejas_Budharamu_Resume_2026.pdf"
+          href={contact.resumeFile}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary"

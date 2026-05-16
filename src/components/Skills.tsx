@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { skills, type SkillGroup } from '../data/skills'
-
-const CHECKPOINT_ICONS = ['01', '02', '03', '04', '05']
+import { type SkillGroup } from '../data/skills'
+import RadarChart from './RadarChart'
 
 function SkillModal({ group, onClose }: { group: SkillGroup | null; onClose: () => void }) {
   useEffect(() => {
@@ -47,24 +46,20 @@ export default function Skills() {
       </h2>
       <div className="section-line" aria-hidden="true" />
 
-      <div className="roadmap" aria-label="Skills roadmap — click a checkpoint to view skills">
-        <div className="roadmap-line" aria-hidden="true" />
-        {skills.map((group, i) => (
-          <button
-            key={group.id}
-            className="checkpoint"
-            onClick={() => setActive(group)}
-            aria-label={`View ${group.label.replace(/<|>/g, '')} skills`}
-          >
-            <div className="checkpoint-dot">
-              <span className="checkpoint-num">{CHECKPOINT_ICONS[i]}</span>
-            </div>
-            <div className="checkpoint-label">
-              {group.label.replace(/<|>/g, '')}
-            </div>
-          </button>
-        ))}
-      </div>
+      <p
+        style={{
+          color: 'var(--muted)',
+          fontSize: '0.8rem',
+          fontFamily: 'var(--mono)',
+          textAlign: 'center',
+          marginTop: '1.25rem',
+          letterSpacing: '0.03em',
+        }}
+      >
+        // hover to inspect · click any axis to explore tools
+      </p>
+
+      <RadarChart onSelect={setActive} />
 
       <SkillModal group={active} onClose={() => setActive(null)} />
     </section>
