@@ -39,7 +39,7 @@ export const experience: ExperienceEntry[] = [
   {
     "date": "May 2026 - Present",
     "role": "Software Developer",
-    "org": "University of South Dakota • Center for Digital Accessibility",
+    "org": "USD • Center for Digital Accessibility",
     "bullets": [
       "Developing AI-assisted document accessibility automation workflows aligned with WCAG 2.1 and ADA Title II compliance standards.",
       "Building backend Python services and REST APIs for document parsing, processing, and accessibility validation pipelines.",
