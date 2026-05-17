@@ -13,7 +13,6 @@ import { SaveButton, Field, GripIcon } from '../components'
 import { useDragSort } from '../useDragSort'
 
 const BLANK_ENTRY: ExperienceEntry = { date: '', role: '', org: '', bullets: [''] }
-const BLANK_AWARD: Award = { title: '', sub: '' }
 
 function EntryEditor({
   entry,
