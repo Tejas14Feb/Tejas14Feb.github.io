@@ -24,13 +24,41 @@ export const education: ExperienceEntry[] = [
 
 export const experience: ExperienceEntry[] = [
   {
+    "date": "May 2026 - Aug 2026",
+    "role": "IT Governance Analytics Intern",
+    "org": "The Bancorp Bank",
+    "bullets": [
+      "Supporting enterprise IT governance initiatives through KPI/KRI reporting, executive dashboards, and data-driven analytics workflows.",
+      "Building and enhancing Power BI/Tableau dashboards for governance forums, operational reporting, and strategic technology oversight.",
+      "Analyzing structured and unstructured datasets to identify trends, anomalies, risk indicators, and operational performance insights.",
+      "Assisting with data quality validation, reporting standardization, metric definitions, and governance documentation practices.",
+      "Developing AI-assisted reporting workflows using tools such as ChatGPT/Copilot to streamline analytics and narrative reporting processes.",
+      "Collaborating cross-functionally with IT, Risk, Compliance, and Operations teams to improve reporting consistency and decision-making."
+    ]
+  },
+  {
+    "date": "May 2026 - Present",
+    "role": "Software Developer",
+    "org": "University of South Dakota • Center for Digital Accessibility",
+    "bullets": [
+      "Developing AI-assisted document accessibility automation workflows aligned with WCAG 2.1 and ADA Title II compliance standards.",
+      "Building backend Python services and REST APIs for document parsing, processing, and accessibility validation pipelines.",
+      "Supporting frontend dashboard and UI/UX development using modern web technologies and cloud-based workflows.",
+      "Assisting with AWS-based cloud deployment, serverless automation, and system monitoring for scalable accessibility solutions.",
+      "Performing testing, validation, and quality assurance to ensure accurate accessibility outputs and standards compliance.",
+      "Collaborating on AI-supported text and image processing systems for automated document analysis and accessibility reporting."
+    ]
+  },
+  {
     "date": "Aug 2025 – Apr 2026",
     "role": "Data Analyst & Developer",
     "org": "Coyote Business Consulting — SDMTS",
     "bullets": [
-      "Migrated 2,671-record manufacturer database from legacy Excel to cloud-based Airtable platform",
-      "Built interactive Supply Chain Mapping Tool live on SDMTS website; ETL pipelines reduced manual processing by 70%",
-      "Developed Power BI KPI dashboards improving leadership decision-making speed by 45%"
+      "Migrated a 2,671-record manufacturer database from a legacy Excel system to a cloud-based Airtable platform supporting South Dakota supply chain analytics.",
+      "Built a live Supply Chain Mapping Tool with BatchGeo integration, advanced filtering, and real-time visualization dashboards embedded on the SDMTS website.",
+      "Designed Python/SQL ETL pipelines for data migration, validation, and operational reporting workflows.",
+      "Conducted multi-platform evaluations across Airtable, Power BI, and Looker Studio to optimize scalability, usability, and cloud integration.",
+      "Developed executive-facing dashboards and manufacturing analytics supporting strategic decision-making and regional benchmarking."
     ]
   },
   {
@@ -38,8 +66,10 @@ export const experience: ExperienceEntry[] = [
     "role": "Entrepreneur Lead / AI & Supply Chain Research Analyst",
     "org": "NSF I-Corps Cohort",
     "bullets": [
-      "Conducted 50+ industry interviews; synthesized findings into quantitative GTM analytics frameworks",
-      "Designed Tableau and Power BI dashboards translating supply chain data into risk indicators for non-technical stakeholders"
+      "Conducted 50+ stakeholder and industry interviews to evaluate supply chain pain points, operational bottlenecks, and market opportunities.",
+      "Applied Python and statistical analysis techniques to synthesize customer discovery insights into quantitative recommendation frameworks.",
+      "Built Tableau and Power BI dashboards visualizing supply chain risk indicators, operational trends, and stakeholder sentiment patterns.",
+      "Supported AI-driven market research and analytics initiatives for technology commercialization and product strategy evaluation."
     ]
   },
   {
@@ -47,16 +77,10 @@ export const experience: ExperienceEntry[] = [
     "role": "Data Science & Bioinformatics Research Assistant",
     "org": "USD Biomedical Engineering Lab",
     "bullets": [
-      "Built Python/SQL ETL pipelines integrating 10,000+ biomedical observations, improving throughput by 70%",
-      "Automated data extraction and standardization; created Matplotlib/Seaborn dashboards for faculty research"
-    ]
-  },
-  {
-    "date": "May 2026 - Aug 2026",
-    "role": "IT Governance Analytics Intern",
-    "org": "The Bancorp Bank",
-    "bullets": [
-      "Supporting enterprise IT governance initiatives through KPI/KRI reporting, executive dashboards, and data-driven analytics workflows.\n\nBuilding and enhancing Power BI/Tableau dashboards for governance forums, operational reporting, and strategic technology oversight.\n\nAnalyzing structured and unstructured datasets to identify trends, anomalies, risk indicators, and operational performance insights.\n\nAssisting with data quality validation, reporting standardization, metric definitions, and governance documentation practices.\nDeveloping AI-assisted reporting workflows using tools such as ChatGPT/Copilot to streamline analytics and narrative reporting processes.\n\nCollaborating cross-functionally with IT, Risk, Compliance, and Operations teams to improve reporting consistency and decision-making."
+      "Built Python/SQL ETL pipelines integrating 14,000+ biomedical observations into reproducible research workflows.",
+      "Automated data extraction, cleaning, preprocessing, and standardization processes for bioinformatics and analytics applications.",
+      "Developed statistical analyses and visualization dashboards using Pandas, Matplotlib, and Seaborn for faculty-level research insights.",
+      "Supported data-driven biomedical research initiatives through analytics, workflow optimization, and scientific reporting."
     ]
   }
 ]
