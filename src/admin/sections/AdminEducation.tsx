@@ -9,7 +9,8 @@ import {
 } from '../../data/education'
 import { serializeEducation } from '../serialize'
 import { saveFile } from '../saveData'
-import { SaveButton, Field } from '../components'
+import { SaveButton, Field, GripIcon } from '../components'
+import { useDragSort } from '../useDragSort'
 
 const BLANK_ENTRY: ExperienceEntry = { date: '', role: '', org: '', bullets: [''] }
 const BLANK_AWARD: Award = { title: '', sub: '' }
@@ -18,12 +19,19 @@ function EntryEditor({
   entry,
   onUpdate,
   onDelete,
+  dragHandleProps,
+  dropZoneProps,
+  isDragOver,
 }: {
   entry: ExperienceEntry
   onUpdate: (e: ExperienceEntry) => void
   onDelete: () => void
+  dragHandleProps: ReturnType<ReturnType<typeof useDragSort>['dragHandleProps']>
+  dropZoneProps: ReturnType<ReturnType<typeof useDragSort>['dropZoneProps']>
+  isDragOver: boolean
 }) {
   const [expanded, setExpanded] = useState(false)
+
   const set = (key: keyof ExperienceEntry) =>
     (e: React.ChangeEvent<HTMLInputElement>) =>
       onUpdate({ ...entry, [key]: e.target.value })
@@ -32,15 +40,24 @@ function EntryEditor({
     onUpdate({ ...entry, bullets: entry.bullets.map((b, j) => j === i ? v : b) })
 
   return (
-    <div className="admin-card" style={{ marginBottom: '0.5rem' }}>
-      <button className="admin-card-header" onClick={() => setExpanded(!expanded)}>
-        <div>
-          <div className="admin-card-meta">{entry.date || '—'}</div>
-          <div className="admin-card-name">{entry.role || 'Untitled entry'}</div>
-          <div className="admin-card-meta">{entry.org}</div>
-        </div>
-        <span className="admin-chevron">{expanded ? '▴' : '▾'}</span>
-      </button>
+    <div
+      className={`admin-card${isDragOver ? ' admin-card--drag-over' : ''}`}
+      style={{ marginBottom: '0.5rem' }}
+      {...dropZoneProps}
+    >
+      <div className="admin-card-row">
+        <span className="admin-drag-handle" {...dragHandleProps} title="Drag to reorder">
+          <GripIcon />
+        </span>
+        <button className="admin-card-header" style={{ flex: 1 }} onClick={() => setExpanded(!expanded)}>
+          <div>
+            <div className="admin-card-meta">{entry.date || '—'}</div>
+            <div className="admin-card-name">{entry.role || 'Untitled entry'}</div>
+            <div className="admin-card-meta">{entry.org}</div>
+          </div>
+          <span className="admin-chevron">{expanded ? '▴' : '▾'}</span>
+        </button>
+      </div>
 
       {expanded && (
         <div className="admin-card-body">
@@ -86,13 +103,25 @@ function AwardEditor({
   award,
   onUpdate,
   onDelete,
+  dragHandleProps,
+  dropZoneProps,
+  isDragOver,
 }: {
   award: Award
   onUpdate: (a: Award) => void
   onDelete: () => void
+  dragHandleProps: ReturnType<ReturnType<typeof useDragSort>['dragHandleProps']>
+  dropZoneProps: ReturnType<ReturnType<typeof useDragSort>['dropZoneProps']>
+  isDragOver: boolean
 }) {
   return (
-    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', alignItems: 'flex-start' }}>
+    <div
+      className={`admin-award-row${isDragOver ? ' admin-card--drag-over' : ''}`}
+      {...dropZoneProps}
+    >
+      <span className="admin-drag-handle" {...dragHandleProps} title="Drag to reorder">
+        <GripIcon />
+      </span>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
         <input
           className="admin-input"
@@ -109,6 +138,74 @@ function AwardEditor({
       </div>
       <button className="admin-tag-x" onClick={onDelete} style={{ marginTop: '0.3rem', flexShrink: 0 }}>×</button>
     </div>
+  )
+}
+
+function EntryList({
+  label,
+  list,
+  setList,
+  blankEntry,
+  addLabel,
+}: {
+  label: string
+  list: ExperienceEntry[]
+  setList: React.Dispatch<React.SetStateAction<ExperienceEntry[]>>
+  blankEntry: ExperienceEntry
+  addLabel: string
+}) {
+  const drag = useDragSort(list, setList)
+  return (
+    <>
+      <p className="admin-section-heading">{label}</p>
+      {list.map((e, i) => (
+        <EntryEditor
+          key={i}
+          entry={e}
+          onUpdate={v => setList(prev => prev.map((x, j) => j === i ? v : x))}
+          onDelete={() => setList(prev => prev.filter((_, j) => j !== i))}
+          dragHandleProps={drag.dragHandleProps(i)}
+          dropZoneProps={drag.dropZoneProps(i)}
+          isDragOver={drag.overIdx === i}
+        />
+      ))}
+      <button className="admin-btn-add" onClick={() => setList(prev => [...prev, { ...blankEntry, bullets: [''] }])}>
+        {addLabel}
+      </button>
+    </>
+  )
+}
+
+function AwardList({
+  label,
+  list,
+  setList,
+  addLabel,
+}: {
+  label: string
+  list: Award[]
+  setList: React.Dispatch<React.SetStateAction<Award[]>>
+  addLabel: string
+}) {
+  const drag = useDragSort(list, setList)
+  return (
+    <>
+      <p className="admin-section-heading" style={{ marginTop: '1.5rem' }}>{label}</p>
+      {list.map((a, i) => (
+        <AwardEditor
+          key={i}
+          award={a}
+          onUpdate={v => setList(prev => prev.map((x, j) => j === i ? v : x))}
+          onDelete={() => setList(prev => prev.filter((_, j) => j !== i))}
+          dragHandleProps={drag.dragHandleProps(i)}
+          dropZoneProps={drag.dropZoneProps(i)}
+          isDragOver={drag.overIdx === i}
+        />
+      ))}
+      <button className="admin-btn-add" onClick={() => setList(prev => [...prev, { title: '', sub: '' }])}>
+        {addLabel}
+      </button>
+    </>
   )
 }
 
@@ -130,62 +227,12 @@ export default function AdminEducation() {
     }
   }
 
-  const updateList = <T,>(
-    list: T[],
-    setter: React.Dispatch<React.SetStateAction<T[]>>,
-    idx: number,
-    val: T,
-  ) => setter(list.map((x, i) => i === idx ? val : x))
-
-  const removeFrom = <T,>(list: T[], setter: React.Dispatch<React.SetStateAction<T[]>>, idx: number) =>
-    setter(list.filter((_, i) => i !== idx))
-
   return (
     <div className="admin-section">
-      <p className="admin-section-heading">Education</p>
-      {edu.map((e, i) => (
-        <EntryEditor
-          key={i}
-          entry={e}
-          onUpdate={v => updateList(edu, setEdu, i, v)}
-          onDelete={() => removeFrom(edu, setEdu, i)}
-        />
-      ))}
-      <button className="admin-btn-add" onClick={() => setEdu(prev => [...prev, { ...BLANK_ENTRY }])}>+ Add education</button>
-
-      <p className="admin-section-heading" style={{ marginTop: '1.5rem' }}>Experience</p>
-      {exp.map((e, i) => (
-        <EntryEditor
-          key={i}
-          entry={e}
-          onUpdate={v => updateList(exp, setExp, i, v)}
-          onDelete={() => removeFrom(exp, setExp, i)}
-        />
-      ))}
-      <button className="admin-btn-add" onClick={() => setExp(prev => [...prev, { ...BLANK_ENTRY }])}>+ Add experience</button>
-
-      <p className="admin-section-heading" style={{ marginTop: '1.5rem' }}>Awards & Recognition</p>
-      {awardsList.map((a, i) => (
-        <AwardEditor
-          key={i}
-          award={a}
-          onUpdate={v => updateList(awardsList, setAwards, i, v)}
-          onDelete={() => removeFrom(awardsList, setAwards, i)}
-        />
-      ))}
-      <button className="admin-btn-add" onClick={() => setAwards(prev => [...prev, { ...BLANK_AWARD }])}>+ Add award</button>
-
-      <p className="admin-section-heading" style={{ marginTop: '1.5rem' }}>Leadership</p>
-      {leadList.map((a, i) => (
-        <AwardEditor
-          key={i}
-          award={a}
-          onUpdate={v => updateList(leadList, setLead, i, v)}
-          onDelete={() => removeFrom(leadList, setLead, i)}
-        />
-      ))}
-      <button className="admin-btn-add" onClick={() => setLead(prev => [...prev, { ...BLANK_AWARD }])}>+ Add leadership</button>
-
+      <EntryList label="Education"   list={edu}        setList={setEdu}    blankEntry={BLANK_ENTRY} addLabel="+ Add education" />
+      <EntryList label="Experience"  list={exp}        setList={setExp}    blankEntry={BLANK_ENTRY} addLabel="+ Add experience" />
+      <AwardList label="Awards & Recognition" list={awardsList} setList={setAwards} addLabel="+ Add award" />
+      <AwardList label="Leadership"  list={leadList}   setList={setLead}   addLabel="+ Add leadership" />
       <SaveButton status={status} label="Save Education" onClick={save} />
     </div>
   )

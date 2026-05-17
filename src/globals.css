@@ -1263,6 +1263,46 @@ section {
 }
 .admin-tag-x:hover { color: var(--red); }
 
+/* Drag-to-reorder */
+.admin-drag-handle {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  cursor: grab;
+  color: var(--muted);
+  opacity: 0.4;
+  flex-shrink: 0;
+  transition: opacity 0.15s, color 0.15s;
+  touch-action: none;
+}
+.admin-drag-handle:hover { opacity: 1; color: var(--orange); }
+.admin-drag-handle:active { cursor: grabbing; }
+
+.admin-card--drag-over {
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 2px rgba(249,115,22,0.25);
+}
+
+.admin-card-row {
+  display: flex;
+  align-items: center;
+}
+.admin-card-row .admin-card-header {
+  flex: 1;
+  width: auto;
+}
+
+.admin-award-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.25rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
 /* Cards (projects / education entries) */
 .admin-card {
   background: var(--bg3);
@@ -1383,3 +1423,239 @@ section {
 .admin-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .admin-save-btn--saved { background: #22c55e; color: #000; }
 .admin-save-btn--error { background: var(--red); color: #fff; }
+
+/* ── Desk Setup ───────────────────────────────────────────── */
+.desk-scene {
+  margin-top: 2rem;
+  user-select: none;
+}
+
+.desk-monitors {
+  display: flex;
+  gap: 0;
+  align-items: flex-end;
+}
+
+.desk-monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Bezel — outer corners rounded, inner edge flush */
+.desk-bezel {
+  width: 100%;
+  background: #1b1b28;
+  border: 2px solid #2c2c3f;
+  padding: 8px 8px 12px;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.6),
+    0 28px 70px rgba(0,0,0,0.8),
+    0 0 60px rgba(249,115,22,0.07);
+  position: relative;
+}
+.desk-monitor--left  .desk-bezel { border-radius: 12px 0 0 0; border-right: none; }
+.desk-monitor--right .desk-bezel { border-radius: 0 12px 0 0; border-left: 1px solid #3a3a54; }
+
+.desk-bezel-top {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 8px;
+}
+.desk-bezel-cam {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 1px solid #3a3a52;
+}
+.desk-bezel-bottom {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 2px;
+}
+.desk-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 8px var(--orange);
+  animation: desk-led-pulse 2.5s ease-in-out infinite;
+}
+@keyframes desk-led-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* Screen */
+.desk-screen {
+  background: #06060d;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #14142a;
+  position: relative;
+}
+
+/* OS chrome (dots only) */
+.desk-chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px 8px;
+  background: #0c0c1a;
+  border-bottom: 1px solid #181828;
+}
+.desk-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.desk-dot--red    { background: #ff5f56; }
+.desk-dot--yellow { background: #febc2e; }
+.desk-dot--green  { background: #28c840; }
+
+/* IDE-style tab bar */
+.desk-tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: #080812;
+  border-bottom: 1px solid #1c1c2e;
+}
+.desk-tabs::-webkit-scrollbar { display: none; }
+
+.desk-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 20px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #5a5a78;
+  background: #080812;
+  border: none;
+  border-right: 1px solid #141424;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s, background 0.2s;
+}
+
+/* Colour stripe at top of every tab */
+.desk-tab::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--tab-accent, transparent);
+  opacity: 0.3;
+  border-radius: 2px 2px 0 0;
+}
+
+.desk-tab:hover {
+  color: #a0a0c0;
+  background: rgba(255,255,255,0.025);
+}
+
+/* Active tab — connects to screen, stripe at full opacity */
+.desk-tab--active {
+  color: var(--text);
+  background: #06060d;
+  border-right: 1px solid #1c1c2e;
+  border-left: 1px solid #1c1c2e;
+  margin-bottom: -1px;
+  padding-bottom: 12px;
+  z-index: 1;
+}
+.desk-tab--active::before { opacity: 1; }
+
+/* Content */
+.desk-content {
+  padding: 1.75rem 2rem;
+  min-height: 300px;
+  animation: desk-fadein 0.22s ease;
+}
+@keyframes desk-fadein {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.desk-content-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.desk-content-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.03em;
+}
+.desk-content-meta {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.desk-content-proficiency {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.desk-content-pct {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--orange);
+  min-width: 2.8rem;
+}
+.desk-progress-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.desk-progress-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: 3px;
+  transition: width 0.45s ease;
+  box-shadow: 0 0 8px rgba(249,115,22,0.5);
+}
+
+.desk-tags { gap: 0.5rem; }
+
+/* Scanlines */
+.desk-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px, transparent 3px,
+    rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  border-radius: 4px;
+  opacity: 0.35;
+}
+
+/* Desk surface — solid thick block */
+.desk-surface {
+  background: linear-gradient(to bottom, #1e1d2a, #15131e);
+  border: 2px solid #2c2a3f;
+  border-top: none;
+  height: 32px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.7);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .desk-monitors { flex-direction: column; align-items: stretch; }
+  .desk-monitor--left  .desk-bezel { border-radius: 12px 12px 0 0; border-right: 2px solid #2c2c3f; border-bottom: none; }
+  .desk-monitor--right .desk-bezel { border-radius: 0; border-left: 2px solid #2c2c3f; }
+  .desk-surface { border-radius: 0 0 12px 12px; }
+  .desk-content { padding: 1.25rem 1.25rem; min-height: 240px; }
+}

@@ -1,5 +1,18 @@
 import { useState, type ReactNode } from 'react'
 
+export function GripIcon() {
+  return (
+    <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor" aria-hidden="true">
+      <circle cx="3" cy="3"    r="1.4"/>
+      <circle cx="7" cy="3"    r="1.4"/>
+      <circle cx="3" cy="8"    r="1.4"/>
+      <circle cx="7" cy="8"    r="1.4"/>
+      <circle cx="3" cy="13"   r="1.4"/>
+      <circle cx="7" cy="13"   r="1.4"/>
+    </svg>
+  )
+}
+
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="admin-field">
